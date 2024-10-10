@@ -3,6 +3,8 @@
 ## How to start dev server
 Pull the repo down from github to your local device (Please not a OneDrive directory)
 
+```Dont forget the .env file, you know where to find it, place it on the root directory```
+
 ### First window
 When it's there run the following commands in your first terminal windows
 1. `bun i` (If it says you don't have bun please run `npm i -g bun@latest`)
