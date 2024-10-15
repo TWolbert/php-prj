@@ -18,8 +18,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/afsrpaken', function () {
- return view('afspraken');})->name('afspraken');
+Route::get('/afspraken', function () {
+    return Inertia::render('Afspraken');
+})->name('afspraken');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
