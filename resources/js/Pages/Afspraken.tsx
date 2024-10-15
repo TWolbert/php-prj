@@ -1,17 +1,33 @@
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import { Head } from '@inertiajs/react';
+import axios from 'axios';
 
 export default function Afspraken() {
     const [isOpen, setIsOpen] = useState(false);
-  
+
     const [date,setDate] = useState('');
     const [time,setTime] = useState('');
     const [patientId,setPatientId] = useState('');
     const [place,setPlace] = useState('');
     const [subject,setSubject] = useState('');
     const [description,setDescription] = useState('');
+
     const [error,setError] = useState('');
 
+    const [appointments,setAppointments] = useState([]);
+
+    useEffect(() =>{
+        const getAppointments = async()=>{
+            try {
+            const response = await axios.get('/getappointments');
+            console.log(response.data);
+            setAppointments(response.data);
+            } catch (error) {
+                console.log("error",error)
+            }
+        }
+        getAppointments();
+    },[])
 
     const openModal = () => {
         if (isOpen) {
@@ -20,8 +36,7 @@ export default function Afspraken() {
             setIsOpen(true);  
         }
     };
-    const MakeAppointment = (e:React.FormEvent<HTMLFormElement> ) => {
-        {/* in here send the data from the form to the database,also close the form */}
+    const MakeAppointment = async (e:React.FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
         if( !date || !time ||!patientId ||!place ||!subject|| !description) {
             setError("Vul alle gegevens in");
@@ -29,6 +44,23 @@ export default function Afspraken() {
         }
         setError('');
         setIsOpen(false);
+
+        const AppointmentData = {
+            date:date,
+            time:time,
+            patient_id:patientId,
+            place:place
+        };
+        try {
+        const response = await axios.post('/afspraken',AppointmentData,{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log("response data",response.data);
+        } catch (error) {
+            console.error("error",error)
+        }
 };
 
     return (
@@ -47,8 +79,21 @@ export default function Afspraken() {
                 </div>
                 
                 <div className="w-3/4 h-[400px] bg-white p-4 ml-4">
-                    <p>This is the Afspraken page content.</p>
+                    <p>afspraken vanuit de database halen en elke afspraak zijn eigen container</p>
                    {/* hierin moet het data van de database halen en elk afspraak zijn eigen container hebben */}
+                   {/* ik moet wel een where maken want we hebben meerdere dokters, en die hebben allemaal een eigen patient */}
+                   {appointments.length > 0 ?(
+                    appointments.map((appointments:any) =>(
+                        <div key={appointments.id} className="p-4 border border-gray-500">
+                            <p>datum:{appointments.date}</p>
+                            <p>tijd:{appointments.time}</p>
+                            <p>patient id{appointments.patient_id}</p>
+                            <p>plaats:{appointments.place}</p>
+                        </div>
+                    ))
+                   ) : (
+                    <p>geen afspraak gevonden</p>
+                   )}
                 </div>
                 
               
@@ -70,7 +115,7 @@ export default function Afspraken() {
                                 <label className="block" htmlFor='time'>
                                 tijd
                                 </label>
-                                <input id='time' type='text' value={time} onChange={(e)=> setTime(e.target.value)}/>
+                                <input id='time' type='time' value={time} onChange={(e)=> setTime(e.target.value)}/>
                             </div>
                             <div className="mb-4">
                                 <label className="block" htmlFor='patientId'>
