@@ -79,15 +79,14 @@ export default function Afspraken() {
                 </div>
                 
                 <div className="w-3/4 h-[400px] bg-white p-4 ml-4">
-                    <p>afspraken vanuit de database halen en elke afspraak zijn eigen container</p>
-                   {/* hierin moet het data van de database halen en elk afspraak zijn eigen container hebben */}
+                    
                    {/* ik moet wel een where maken want we hebben meerdere dokters, en die hebben allemaal een eigen patient */}
                    {appointments.length > 0 ?(
                     appointments.map((appointments:any) =>(
-                        <div key={appointments.id} className="p-4 border border-gray-500">
+                        <div key={appointments.id} className="p-4 m-4 border border-gray-500">
                             <p>datum:{appointments.date}</p>
                             <p>tijd:{appointments.time}</p>
-                            <p>patient id{appointments.patient_id}</p>
+                            <p>patient id:{appointments.patient_id}</p>
                             <p>plaats:{appointments.place}</p>
                         </div>
                     ))
@@ -95,8 +94,6 @@ export default function Afspraken() {
                     <p>geen afspraak gevonden</p>
                    )}
                 </div>
-                
-              
             </div>          
 
             {isOpen && (

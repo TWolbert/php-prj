@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Appointment;
 use Illuminate\Foundation\Application;
@@ -24,8 +25,13 @@ Route::get('/afspraken', function () {
     return Inertia::render('Afspraken');
 })->name('afspraken');
 
+Route::get('/patientinfo',function(){
+    return Inertia::render('Patientinfo');
+})->name('patientinfo');
+
 Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
+Route::get('/getpatients',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
