@@ -24,6 +24,7 @@ export default function Afspraken() {
             setAppointments(response.data);
             } catch (error) {
                 console.log("error",error)
+                alert("er is een fout opgetreden")
             }
         }
         getAppointments();
