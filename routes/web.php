@@ -31,7 +31,8 @@ Route::get('/patientinfo',function(){
 
 Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
-Route::get('/getpatients',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
+Route::get('/getpatients/{id}',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
+Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
