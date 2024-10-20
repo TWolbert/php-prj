@@ -15,7 +15,7 @@ export default function Afspraken() {
     const [error,setError] = useState('');
 
     const [appointments,setAppointments] = useState([]);
-
+        
     useEffect(() =>{
         const getAppointments = async()=>{
             try {
@@ -52,15 +52,13 @@ export default function Afspraken() {
             patient_id:patientId,
             place:place
         };
+
         try {
-        const response = await axios.post('/afspraken',AppointmentData,{
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await axios.post('/afspraken',AppointmentData)
         console.log("response data",response.data);
         } catch (error) {
             console.error("error",error)
+            alert("er is een fout opgetreden")
         }
 };
 

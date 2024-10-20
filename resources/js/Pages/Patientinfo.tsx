@@ -82,7 +82,7 @@ export default function Patientinfo () {
                     <input id="searchId" type="number" min={1} value={searchId} onChange={(e)=>setSearchId(e.target.value)} />
                     <div className="mt-4">
                     <button className="p-4 bg-blue-400" onClick={searchButton}>
-                    zoek patient op                        
+                    zoek patient op met id                     
                     </button>
                     </div>
             </form>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Appointment;
@@ -29,9 +30,16 @@ Route::get('/patientinfo',function(){
     return Inertia::render('Patientinfo');
 })->name('patientinfo');
 
+Route::get('/voorvallen',function(){
+    return Inertia::render('Voorvallen');
+})->name('voorvallen');
+
+
 Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
+Route::get('/getincidents/{id}',[IncidentController::class,'getIncidents'])->name('/getincidents.getIncidents');
 Route::get('/getpatients/{id}',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
+
 Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 
 Route::middleware('auth')->group(function () {
