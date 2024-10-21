@@ -27,7 +27,6 @@ export default function Patients({ auth, patients }: PageProps<{ patients: Patie
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Patienten opzoeken</h2>}
         >
             <div>
-                {/* zoekbalk maken zoeken op naam */}
                 <label htmlFor="search">
                     zoekbalk
                 </label>
@@ -37,6 +36,11 @@ export default function Patients({ auth, patients }: PageProps<{ patients: Patie
             {searchResults.map(patient => <p key={patient.id}>
                 {patient.firstname} {patient.lastname}
             </p>)}
+
+            <button className="bg-blue-400 p-4">
+            patient maken
+            </button>
+            
         </ AuthenticatedLayout>
     )
 }

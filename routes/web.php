@@ -39,6 +39,10 @@ Route::get('/patients',function(){
     ]);
 })->middleware(['auth', 'verified'])->name('patients');
 
+Route::get('/patients/create',function(){
+    return Inertia::render('PatientCreate');
+})->middleware(['auth', 'verified'])->name('patientcreate');
+
 Route::get('/voorvallen',function(){
     return Inertia::render('Voorvallen');
 })->name('voorvallen');
