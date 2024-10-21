@@ -11,7 +11,7 @@ class StoreroomsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->role == 1;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreroomsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'number' => ['required', 'string', 'max:255'],
+            'room_type_id' => ['required'],
+            'room_taken' => ['required', 'boolean'],
         ];
     }
 }

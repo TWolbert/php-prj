@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\doctors;
 use App\Http\Requests\StoredoctorsRequest;
 use App\Http\Requests\UpdatedoctorsRequest;
+use Inertia\Inertia;
 
 class DoctorsController extends Controller
 {
@@ -21,7 +22,7 @@ class DoctorsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('DoctorCreate');
     }
 
     /**
@@ -29,7 +30,17 @@ class DoctorsController extends Controller
      */
     public function store(StoredoctorsRequest $request)
     {
-        //
+        // Check for duplicates
+        $doctor = doctors::where('firstname', $request->firstname)
+            ->where('lastname', $request->lastname)
+            ->where('place', $request->place)
+            ->first();
+
+        if ($doctor) {
+            return response()->json(['error' => 'Doctor already exists'], 400);
+        }
+        
+        doctors::create($request->validated());
     }
 
     /**

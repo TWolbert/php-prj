@@ -10,3 +10,26 @@ export interface PatientType {
     extra_id: number,
     room_id: number,
 }
+
+export interface DoctorType { 
+    id: number;
+    firstname: string;
+    lastname: string;
+    place: string;
+}
+
+export interface Address {
+    id: number;
+    city: string;
+    street_name: string;
+    house_number: string;
+    postcode: string;
+    extension: string;
+}
+
+export interface RoomType {
+    id: number;
+    number: string;
+    room_type_id: number;
+    room_taken: boolean;
+}

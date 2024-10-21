@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomsController;
 use App\Models\Appointment;
+use App\Models\doctors;
 use App\Models\Patient;
+use App\Models\rooms;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +44,10 @@ Route::get('/patients',function(){
 })->middleware(['auth', 'verified'])->name('patients');
 
 Route::get('/patients/create',function(){
-    return Inertia::render('PatientCreate');
+    return Inertia::render('PatientCreate', [
+        'doctors' => doctors::all(),
+        'rooms' => rooms::all()
+    ]);
 })->middleware(['auth', 'verified'])->name('patientcreate');
 
 Route::get('/voorvallen',function(){
@@ -48,10 +55,16 @@ Route::get('/voorvallen',function(){
 })->name('voorvallen');
 
 
+
+
 Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
 Route::get('/getincidents/{id}',[IncidentController::class,'getIncidents'])->name('/getincidents.getIncidents');
 Route::get('/getpatients/{id}',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
+
+// Tie Doctor controller to /doctor using resource
+Route::resource('doctors', DoctorsController::class)->middleware(['auth', 'verified']);
+Route::resource('rooms', RoomsController::class)->middleware(['auth', 'verified']);
 
 Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 

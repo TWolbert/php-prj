@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // protected $fillable = [
-        //     'doctor_id',
-        //     'diploma_name',
-        //     'school',
-        // ];
-        Schema::create('diplomas', function (Blueprint $table) {
+        Schema::create('extras', function (Blueprint $table) {
             $table->id();
-            $table->integer('doctor_id');
-            $table->string('diploma_name');
-            $table->string('school');
+            $table->integer('patient_id');
+            $table->text('reason_for_intake');
+            $table->integer('patient_type_id');
+            $table->text('current_disease');
+            $table->date('last_treatment_date');
+            $table->date('next_treatment_date');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diplomas');
+        Schema::dropIfExists('extras');
     }
 };
