@@ -1,4 +1,5 @@
 export interface PatientType {
+    id: number,
     firstname: string,
     lastname: string,
     is_dead: boolean,

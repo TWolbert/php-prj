@@ -33,6 +33,12 @@ Route::get('/patientinfo/{id}',function($id){
     ]);
 })->name('patientinfo');
 
+Route::get('/patients',function(){
+    return Inertia::render('Patients',[
+        'patients' => Patient::all()
+    ]);
+})->middleware(['auth', 'verified'])->name('patients');
+
 Route::get('/voorvallen',function(){
     return Inertia::render('Voorvallen');
 })->name('voorvallen');
