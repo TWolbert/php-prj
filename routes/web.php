@@ -5,6 +5,7 @@ use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,8 +27,10 @@ Route::get('/afspraken', function () {
     return Inertia::render('Afspraken');
 })->name('afspraken');
 
-Route::get('/patientinfo',function(){
-    return Inertia::render('Patientinfo');
+Route::get('/patientinfo/{id}',function($id){
+    return Inertia::render('Patientinfo',[
+        'patients' => Patient::findOrFail($id)
+    ]);
 })->name('patientinfo');
 
 Route::get('/voorvallen',function(){

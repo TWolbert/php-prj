@@ -1,7 +1,8 @@
+import { PageProps } from "@/types";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export default function Patientinfo () {
+export default function Patientinfo ({ auth, patients }: PageProps<{ patients: [] }>) {
     
     const [searchId,setSearchId] = useState('');
     const [id,setId] = useState('');
@@ -75,6 +76,7 @@ export default function Patientinfo () {
 
     return(
         <div>
+            {JSON.stringify(patients)}
             <form className="p-4 ">
                     <label className="block" htmlFor="searchId">
                     zoek id
