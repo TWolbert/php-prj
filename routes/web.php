@@ -57,16 +57,17 @@ Route::get('/voorvallen',function(){
 
 
 
-Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
-Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
-Route::get('/getincidents/{id}',[IncidentController::class,'getIncidents'])->name('/getincidents.getIncidents');
-Route::get('/getpatients/{id}',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
+//Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
+//Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
+//Route::get('/getincidents/{id}',[IncidentController::class,'getIncidents'])->name('/getincidents.getIncidents');
+
+//Route::get('/getpatients/{id}',[PatientController::class,'getPatients'])->name('patientinfo.getPatients');
 
 // Tie Doctor controller to /doctor using resource
 Route::resource('doctors', DoctorsController::class)->middleware(['auth', 'verified']);
 Route::resource('rooms', RoomsController::class)->middleware(['auth', 'verified']);
 
-Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
+//Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

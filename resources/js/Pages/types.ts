@@ -33,3 +33,10 @@ export interface RoomType {
     room_type_id: number;
     room_taken: boolean;
 }
+
+export interface IncidentenType {
+    id: number;
+    date: string;
+    sort_injury: string;
+    patient_id: number;
+}

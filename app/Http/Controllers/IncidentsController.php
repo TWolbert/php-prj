@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\incidents;
 use App\Http\Requests\StoreincidentsRequest;
 use App\Http\Requests\UpdateincidentsRequest;
+use Inertia\Inertia;
 
 class IncidentsController extends Controller
 {
@@ -21,7 +22,7 @@ class IncidentsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Incidenten');
     }
 
     /**
@@ -29,7 +30,16 @@ class IncidentsController extends Controller
      */
     public function store(StoreincidentsRequest $request)
     {
-        //
+          // Check for duplicates
+          //er kunnen toch geen duplicates incidents zijn?
+          $incidents = incidents::where('sort_injury', $request->sort_injury)
+          ->first();
+
+      if ($incidents) {
+          return response()->json(['error' => 'Room already exists'], 400);
+      }
+      
+      incidents::create($request->validated());
     }
 
     /**
