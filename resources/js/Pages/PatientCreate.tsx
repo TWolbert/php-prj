@@ -5,20 +5,12 @@ import { DoctorType, PatientType, Address, RoomType } from './types';
 
 export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doctors: DoctorType[], rooms: RoomType[] }>) {
     const [firstName, setFirstName] = useState('');
-
-    useEffect(() => {
-        if (firstName.length > 255) {
-            setFirstName(firstName.slice(0, 255));
-        }
-    }, [firstName]);
-
     const [lastName, setLastName] = useState('');
 
     useEffect(() => {
-        if (lastName.length > 255) {
-            setLastName(lastName.slice(0, 255));
-        }
-    }, [lastName]);
+        if (firstName.length > 255) setFirstName(firstName.slice(0, 255));
+        if (lastName.length > 255) setLastName(lastName.slice(0, 255));
+    }, [firstName, lastName]);
 
     const [isExtern, setIsExtern] = useState(false);
     const [birthDate, setBirthDate] = useState('');
