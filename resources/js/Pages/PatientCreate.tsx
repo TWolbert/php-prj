@@ -42,7 +42,14 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
     }, [streetName, houseNumber, city, postcode, extension]);
 
     const [roomId, setRoomId] = useState('');
-    const [extraObj, setExtraObj] = useState({});
+    const [extraObj, setExtraObj] = useState({
+        id: 0,
+        reason_for_intake: '',
+        patient_type_id: 0,
+        current_disease: '',
+        last_treatment_date: '',
+        next_treatment_date: ''
+    });
 
     const [reasonForIntake, setReasonForIntake] = useState('');
     const [currentDisease, setCurrentDisease] = useState('');
