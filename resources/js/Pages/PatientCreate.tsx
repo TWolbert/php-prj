@@ -42,7 +42,30 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
     }, [streetName, houseNumber, city, postcode, extension]);
 
     const [roomId, setRoomId] = useState('');
-    const [extraId, setExtraId] = useState('');
+    const [extraObj, setExtraObj] = useState({});
+
+    const [reasonForIntake, setReasonForIntake] = useState('');
+    const [currentDisease, setCurrentDisease] = useState('');
+    const [lastTreatmentDate, setLastTreatmentDate] = useState('');
+    const [nextTreatmentDate, setNextTreatmentDate] = useState('');
+
+    useEffect(() => {
+        // Check if next treamtment date is after last treatment date
+        if (new Date(nextTreatmentDate) < new Date(lastTreatmentDate)) {
+            setNextTreatmentDate(lastTreatmentDate);
+        }
+    }, [lastTreatmentDate, nextTreatmentDate]);
+
+    useEffect(() => {
+        setExtraObj({
+            id: 0,
+            reason_for_intake: reasonForIntake,
+            patient_type_id: 0,
+            current_disease: currentDisease,
+            last_treatment_date: lastTreatmentDate,
+            next_treatment_date: nextTreatmentDate,
+        });
+    }, [extraObj]);
 
     return (
         <AuthenticatedLayout
@@ -97,6 +120,31 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
                         <select id="roomId" value={roomId} onChange={(e) => setRoomId(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md">
                             {rooms.map(room => <option key={room.id} value={room.id}>{room.number}</option>)}
                         </select>
+                    </div>
+                    <p className='font-bold mt-5 mb-2'>Extra info regel</p>
+                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                        <label htmlFor="streetName">
+                            Reden voor inname
+                        </label>
+                        <input type="text" id="streetName" value={reasonForIntake} onChange={(e) => setReasonForIntake(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                    </div>
+                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                        <label htmlFor="currentDisease">
+                            Huidige ziekte
+                        </label>
+                        <input type="text" id="currentDisease" value={currentDisease} onChange={(e) => setCurrentDisease(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                    </div>
+                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                        <label htmlFor="lastTreatmentDate">
+                            Laatste behandeling datum
+                        </label>
+                        <input type="date" id="lastTreatmentDate" value={lastTreatmentDate} onChange={(e) => setLastTreatmentDate(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                    </div>
+                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                        <label htmlFor="nextTreatmentDate">
+                            Volgende behandeling datum
+                        </label>
+                        <input type="date" id="nextTreatmentDate" value={nextTreatmentDate} onChange={(e) => setNextTreatmentDate(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
                     </div>
                     <p className='font-bold mt-5 mb-2'>Adres regel</p>
                     <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
