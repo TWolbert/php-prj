@@ -103,24 +103,6 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
             });
     }
 
-    function setTestValues() {
-        setFirstName('Test');
-        setLastName('Test');
-        setIsExtern(true);
-        setBirthDate('2000-01-01');
-        setDoctorId('1');
-        setStreetName('Teststraat');
-        setHouseNumber('1');
-        setCity('Teststad');
-        setPostcode('1234AB');
-        setExtension('A');
-        setRoomId('1');
-        setReasonForIntake('Test');
-        setCurrentDisease('Test');
-        setLastTreatmentDate('2021-01-01');
-        setNextTreatmentDate('2021-01-02');
-    }
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -128,9 +110,6 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
         >
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col gap-2 mx-5 '>
-                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="button" onClick={setTestValues}>
-                        Test values
-                    </button>
                     <div className="flex flex-col gap-1 px-3 py-2 mt-5 bg-white rounded-md shadow-md ">
                         <label htmlFor="firstName">
                             First Name
