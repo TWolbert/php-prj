@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { useEffect, useState } from 'react';
 import { DoctorType, PatientType, Address, RoomType } from './types';
+import axios from 'axios';
 
 export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doctors: DoctorType[], rooms: RoomType[] }>) {
     const [firstName, setFirstName] = useState('');
@@ -43,7 +44,6 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
 
     const [roomId, setRoomId] = useState('');
     const [extraObj, setExtraObj] = useState({
-        id: 0,
         reason_for_intake: '',
         patient_type_id: 0,
         current_disease: '',
@@ -65,7 +65,6 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
 
     useEffect(() => {
         setExtraObj({
-            id: 0,
             reason_for_intake: reasonForIntake,
             patient_type_id: 0,
             current_disease: currentDisease,
@@ -74,116 +73,170 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
         });
     }, [extraObj]);
 
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const patientObj = {
+            patient: {
+                firstname: firstName,
+                lastname: lastName,
+                is_dead: false,
+                is_extern: isExtern,
+                birth_date: birthDate,
+                doctor_id: doctorId,
+                address_id: addressObj,
+                room_id: roomId,
+            },
+            address: addressObj,
+            extra: extraObj
+        }
+
+        axios.post('/patients', patientObj)
+            .then(res => {
+                console.log(res.data);
+                if ('message' in res.data) {
+                    document.location.href = '/patients';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    function setTestValues() {
+        setFirstName('Test');
+        setLastName('Test');
+        setIsExtern(true);
+        setBirthDate('2000-01-01');
+        setDoctorId('1');
+        setStreetName('Teststraat');
+        setHouseNumber('1');
+        setCity('Teststad');
+        setPostcode('1234AB');
+        setExtension('A');
+        setRoomId('1');
+        setReasonForIntake('Test');
+        setCurrentDisease('Test');
+        setLastTreatmentDate('2021-01-01');
+        setNextTreatmentDate('2021-01-02');
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Patient creëren</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Patient creëren</h2>}
         >
             <div>
-                <form action="" className=' flex flex-col mx-5 gap-2'>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2 mt-5 ">
+                <form onSubmit={handleSubmit} className='flex flex-col gap-2 mx-5 '>
+                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="button" onClick={setTestValues}>
+                        Test values
+                    </button>
+                    <div className="flex flex-col gap-1 px-3 py-2 mt-5 bg-white rounded-md shadow-md ">
                         <label htmlFor="firstName">
                             First Name
                         </label>
-                        <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                         <p>
                             {firstName.length} / 255
                         </p>
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="lastName">
                             Last Name
                         </label>
-                        <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                         <p>
                             {lastName.length} / 255
                         </p>
                     </div>
                     {/* Checkbox for is Extern */}
-                    <div className=" flex justify-between gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex justify-between gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="isExtern">
                             Is Extern
                         </label>
-                        <input type="checkbox" id="isExtern" checked={isExtern} onChange={(e) => setIsExtern(e.target.checked)} className="p-3 shadow-md border-gray-200 rounded-md" />
+                        <input type="checkbox" id="isExtern" checked={isExtern} onChange={(e) => setIsExtern(e.target.checked)} className="p-3 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="birthDate">
                             Birth Date
                         </label>
-                        <input type="date" id="birthDate" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="date" id="birthDate" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="doctorId">
                             Doctor
                         </label>
-                        <select id="doctorId" value={doctorId} onChange={(e) => setDoctorId(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md">
+                        <select id="doctorId" value={doctorId} onChange={(e) => setDoctorId(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md">
                             {doctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.firstname} {doctor.lastname}</option>)}
                         </select>
                     </div>
-                    <div className='flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2'>
+                    <div className='flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md'>
                         <label htmlFor="roomId">
                             Room
                         </label>
-                        <select id="roomId" value={roomId} onChange={(e) => setRoomId(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md">
+                        <select id="roomId" value={roomId} onChange={(e) => setRoomId(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md">
                             {rooms.map(room => <option key={room.id} value={room.id}>{room.number}</option>)}
                         </select>
                     </div>
-                    <p className='font-bold mt-5 mb-2'>Extra info regel</p>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <p className='mt-5 mb-2 font-bold'>Extra info regel</p>
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="streetName">
                             Reden voor inname
                         </label>
-                        <input type="text" id="streetName" value={reasonForIntake} onChange={(e) => setReasonForIntake(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="streetName" value={reasonForIntake} onChange={(e) => setReasonForIntake(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="currentDisease">
                             Huidige ziekte
                         </label>
-                        <input type="text" id="currentDisease" value={currentDisease} onChange={(e) => setCurrentDisease(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="currentDisease" value={currentDisease} onChange={(e) => setCurrentDisease(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="lastTreatmentDate">
                             Laatste behandeling datum
                         </label>
-                        <input type="date" id="lastTreatmentDate" value={lastTreatmentDate} onChange={(e) => setLastTreatmentDate(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="date" id="lastTreatmentDate" value={lastTreatmentDate} onChange={(e) => setLastTreatmentDate(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="nextTreatmentDate">
                             Volgende behandeling datum
                         </label>
-                        <input type="date" id="nextTreatmentDate" value={nextTreatmentDate} onChange={(e) => setNextTreatmentDate(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="date" id="nextTreatmentDate" value={nextTreatmentDate} onChange={(e) => setNextTreatmentDate(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <p className='font-bold mt-5 mb-2'>Adres regel</p>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <p className='mt-5 mb-2 font-bold'>Adres regel</p>
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="streetName">
                             Street Name
                         </label>
-                        <input type="text" id="streetName" value={streetName} onChange={(e) => setStreetName(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="streetName" value={streetName} onChange={(e) => setStreetName(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="houseNumber">
                             House Number
                         </label>
-                        <input type="text" id="houseNumber" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="houseNumber" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="city">
                             City
                         </label>
-                        <input type="text" id="city" value={city} onChange={(e) => setCity(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="city" value={city} onChange={(e) => setCity(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">
+                    <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="postcode">
                             Postcode
                         </label>
-                        <input type="text" id="postcode" value={postcode} onChange={(e) => setPostcode(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="postcode" value={postcode} onChange={(e) => setPostcode(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
-                    <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2 mb-3">
+                    <div className="flex flex-col gap-1 px-3 py-2 mb-3 bg-white rounded-md shadow-md ">
                         <label htmlFor="extension">
                             Extension
                         </label>
-                        <input type="text" id="extension" value={extension} onChange={(e) => setExtension(e.target.value)} className="px-3 py-2 shadow-md border-gray-200 rounded-md" />
+                        <input type="text" id="extension" value={extension} onChange={(e) => setExtension(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
                     </div>
+                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="submit">
+                        Create
+                    </button>
                 </form>
             </div>
         </AuthenticatedLayout>

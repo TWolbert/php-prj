@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\patients;
 use App\Http\Requests\StorepatientsRequest;
 use App\Http\Requests\UpdatepatientsRequest;
+use App\Models\address;
+use App\Models\extra;
 
 class PatientsController extends Controller
 {
@@ -29,7 +31,20 @@ class PatientsController extends Controller
      */
     public function store(StorepatientsRequest $request)
     {
-        //
+        $extra = extra::create($request->validated()['extra']);
+        $extraId = $extra->id;
+
+        $address = address::create($request->validated()['address']);
+        $addressId = $address->id;
+
+        $patient = $request->validated()['patient'];
+        $patient['extra_id'] = $extraId;
+        $patient['address_id'] = $addressId;
+
+        patients::create($patient);
+
+        // Return confirmation message
+        return ['message' => 'Patient created'];
     }
 
     /**

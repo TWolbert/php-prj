@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
 use App\Models\Appointment;
@@ -49,6 +50,8 @@ Route::get('/patients/create',function(){
         'rooms' => rooms::all()
     ]);
 })->middleware(['auth', 'verified'])->name('patientcreate');
+
+Route::post('/patients',action: [PatientsController::class, 'store'])->name('patientcreate.createPatient');
 
 Route::get('/voorvallen',function(){
     return Inertia::render('Voorvallen');
