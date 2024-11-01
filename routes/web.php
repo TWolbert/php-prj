@@ -72,7 +72,12 @@ Route::get('/wachtlijst',function(){
     ]);
 })->middleware(['auth', 'verified'])->name('waitinglist');
 
-
+Route::get("/financien",function(){
+    return Inertia::render('Finance',[
+        'patients' => Patient::all(),
+        'rooms' => rooms::all()
+    ]);
+})->middleware(['auth', 'verified'])->name('finance');
 
 //Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 //Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
