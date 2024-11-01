@@ -30,15 +30,6 @@ class IncidentsController extends Controller
      */
     public function store(StoreincidentsRequest $request)
     {
-          // Check for duplicates
-          //er kunnen toch geen duplicates incidents zijn?
-          $incidents = incidents::where('sort_injury', $request->sort_injury)
-          ->first();
-
-      if ($incidents) {
-          return response()->json(['error' => 'Room already exists'], 400);
-      }
-      
       incidents::create($request->validated());
     }
 

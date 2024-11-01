@@ -36,7 +36,13 @@ export interface RoomType {
 
 export interface IncidentenType {
     id: number;
-    date: string;
+    date: Date;
     sort_injury: string;
     patient_id: number;
+}
+
+export interface WaitingListType {
+    id: number;
+    name: string;
+    email: string;
 }
