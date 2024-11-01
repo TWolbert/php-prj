@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\IncidentsController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\WaitingListController;
@@ -52,6 +53,11 @@ Route::get('/patients/create',function(){
     ]);
 })->middleware(['auth', 'verified'])->name('patientcreate');
 
+Route::post('/patients',action: [PatientsController::class, 'store'])->name('patientcreate.createPatient');
+
+Route::get('/voorvallen',function(){
+    return Inertia::render('Voorvallen');
+})->name('voorvallen');
 
 Route::get('/incidenten',function(){
     return Inertia::render('Incidenten',[
