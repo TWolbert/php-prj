@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
-use App\Models\Appointment;
+use App\Models\appointments;
 use App\Models\doctors;
+use App\Models\address;
 use App\Models\Patient;
 use App\Models\rooms;
 use Illuminate\Foundation\Application;
@@ -27,9 +28,18 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/afspraken', function () {
-    return Inertia::render('Afspraken');
-})->name('afspraken');
+Route::get('/appointment',function(){
+    return Inertia::render('Appointment');
+})->name('appointment');
+
+Route::get('/archive',function(){
+    return Inertia::render('Archive',[
+        'patients' => Patient::all(),
+        'doctors' => doctors::all(),
+        'rooms' => rooms::all(),
+        'address' => address::all()
+    ]);
+})->name('archive');
 
 Route::get('/patientinfo/{id}',function($id){
     return Inertia::render('Patientinfo',[
@@ -66,6 +76,7 @@ Route::get('/voorvallen',function(){
 // Tie Doctor controller to /doctor using resource
 Route::resource('doctors', DoctorsController::class)->middleware(['auth', 'verified']);
 Route::resource('rooms', RoomsController::class)->middleware(['auth', 'verified']);
+Route::resource('appointments', AppointmentsController::class)->middleware(['auth', 'verified']);
 
 //Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 

@@ -11,7 +11,7 @@ export interface PatientType {
     room_id: number,
 }
 
-export interface DoctorType { 
+export interface DoctorType {
     id: number;
     firstname: string;
     lastname: string;
@@ -39,4 +39,16 @@ export interface IncidentenType {
     date: string;
     sort_injury: string;
     patient_id: number;
+}
+
+export interface AppointmentType {
+    id: number;
+    date: Date;
+    time: string;
+    patient_id: number;
+    place: string;
+}
+
+export interface ArchiveType {
+    //
 }

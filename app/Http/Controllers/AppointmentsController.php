@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\appointments;
 use App\Http\Requests\StoreappointmentsRequest;
 use App\Http\Requests\UpdateappointmentsRequest;
+use Inertia\Inertia;
 
 class AppointmentsController extends Controller
 {
@@ -21,7 +22,7 @@ class AppointmentsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Appointment');
     }
 
     /**
@@ -29,7 +30,7 @@ class AppointmentsController extends Controller
      */
     public function store(StoreappointmentsRequest $request)
     {
-        //
+        appointments::create($request->validated());
     }
 
     /**
