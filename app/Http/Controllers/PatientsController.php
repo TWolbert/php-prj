@@ -76,6 +76,7 @@ class PatientsController extends Controller
      */
     public function destroy(patients $patients)
     {
-        //
+        // add patient id to archive table
+        
     }
 }

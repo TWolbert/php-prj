@@ -49,7 +49,8 @@ Route::get('/patients',function(){
 Route::get('/patients/create',function(){
     return Inertia::render('PatientCreate', [
         'doctors' => doctors::all(),
-        'rooms' => rooms::all()
+        'rooms' => rooms::all(),
+        'waitinglist' => waitinglist::all()
     ]);
 })->middleware(['auth', 'verified'])->name('patientcreate');
 
