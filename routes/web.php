@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\BillingsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\WaitingListController;
 use App\Models\Appointment;
+use App\Models\appointments;
+use App\Models\archive;
 use App\models\Billings;
 use App\Models\doctors;
 use App\Models\Incident;
@@ -84,6 +87,16 @@ Route::get("/financien",function(){
     ]);
 })->middleware(['auth', 'verified'])->name('finance');
 
+Route::get('/afspraak',function(){
+    return Inertia::render('Appointment');
+})->middleware(['auth', 'verified'])->name('appointment');
+
+Route::get('/archief',function(){
+    return Inertia::render('Archive',[
+        'archived_patients' => archive::all()
+    ]);
+})->middleware(['auth', 'verified'])->name('archive');
+
 //Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 //Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');
 //Route::get('/getincidents/{id}',[IncidentController::class,'getIncidents'])->name('/getincidents.getIncidents');
@@ -97,6 +110,7 @@ Route::resource('incident', IncidentsController::class)->middleware(['auth', 've
 Route::resource('waitinglist', WaitingListController::class)->middleware(['auth', 'verified']);
 Route::resource('patient', controller: PatientsController::class)->middleware(['auth', 'verified']);
 Route::resource('Billings',BillingsController::class)->middleware(['auth', 'verified']);
+Route::resource('appointments',AppointmentsController::class)->middleware(['auth', 'verified']);
 //Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 
 Route::middleware('auth')->group(function () {

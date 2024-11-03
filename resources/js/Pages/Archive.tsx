@@ -2,16 +2,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {PageProps} from "@/types";
 import React, {useEffect} from "react";
 import axios from "axios";
-import {ArchiveType, PatientType, DoctorType, RoomType, Address} from "@/Pages/types";
+import { PatientType, DoctorType, RoomType, Address} from "@/Pages/types";
 
-export default function Archive({ auth, patients, doctors, rooms, address }: PageProps<{ archive: ArchiveType[], patients: PatientType[], doctors: DoctorType, rooms: RoomType, address: Address[]}>) {
-    const [patients, setPatients] = useState<PatientType[]>([]);
-    const [doctors, setDoctors] = useState<DoctorType[]>([]);
-    const [rooms, setRooms] = useState<RoomType[]>([]);
-    const [address, setAddress] = useState<Address[]>([]);
+export default function Archive({ auth, patients, doctors, rooms, address }: PageProps<{ patients: PatientType[], doctors: DoctorType, rooms: RoomType, address: Address[]}>) {
+   
     useEffect(() => {
 
     }, []);
+
 return (
 <AuthenticatedLayout
     user={auth.user}
