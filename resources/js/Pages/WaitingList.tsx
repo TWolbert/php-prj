@@ -23,9 +23,10 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
             email: email,
         }).then(response => {
             console.log(response)
-            alert("U bent ingeschreven")
+            console.error("U bent ingeschreven")
         }).catch(error => {
             console.log(error)
+            alert("U bent ingeschreven")
         })
     }
 
@@ -34,10 +35,10 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Inschrijven wachtlijst</h2>}
         >
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex flex-col items-center justify-start min-h-screen">
                 {auth.user.role === 0 && (
 
-                    <form onSubmit={SignInWaitingList}>
+                    <form onSubmit={SignInWaitingList} className="mb-4">
                         <button type="submit" className="bg-blue-400 p-4">
                             inschrijven
                         </button>
@@ -45,11 +46,10 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
 
 
                 )}
-            </div>
+         
 
-            <div>
                 {auth.user.role === 1 && (
-
+                    
                     <div className="flex flex-col items-center justify-center pt-3 px-[30rem] gap-2">
                         {data.length > 0 ? (
                            <ul className="w-full space-y-2">
