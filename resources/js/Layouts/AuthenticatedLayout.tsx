@@ -28,28 +28,40 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('incidenten')} active={route().current('incidenten')}>
                                     incidenten
                                 </NavLink>
-                                <NavLink href={route('patients')} active={route().current('patients')}>
-                                    Patiënten
-                                </NavLink>
-                               
                                 <NavLink href={route('waitinglist')} active={route().current('waitinglist')}>
-                                    wachtlijst 
+                                    wachtlijst
                                 </NavLink>
-                                    {user.role === 1 && (
-                                <NavLink href={route('finance')} active={route().current('finance')}>
-                                    financien 
-                                </NavLink>
-                                    )}
-                                     {user.role === 1 && (
-                                <NavLink href={route('archive')} active={route().current('archive')}>
-                                    Archief
-                                </NavLink>
-                                     )}
-                                       {user.role === 1 && (
-                                <NavLink href={route('appointment')} active={route().current('appointment')}>
-                                    Afspraak maken
-                                </NavLink>
+                                {user.role === 1 && (
+                                    <NavLink href={route('patients')} active={route().current('patients')}>
+                                        Patiënten
+                                    </NavLink>
                                 )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('finance')} active={route().current('finance')}>
+                                        financien
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('archive')} active={route().current('archive')}>
+                                        Archief
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('appointment')} active={route().current('appointment')}>
+                                        Afspraak maken
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('doctormaken')} active={route().current('doctormaken')}>
+                                        doctor creëren
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('kamermaken')} active={route().current('kamermaken')}>
+                                        kamer creëren
+                                    </NavLink>
+                                )}
+
                             </div>
                         </div>
 

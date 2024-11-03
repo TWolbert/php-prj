@@ -93,9 +93,17 @@ Route::get('/afspraak',function(){
 
 Route::get('/archief',function(){
     return Inertia::render('Archive',[
-        'archived_patients' => archive::all()
+        'archivedPatients' => archive::all()
     ]);
 })->middleware(['auth', 'verified'])->name('archive');
+
+Route::get('/doctor maken',function(){
+    return Inertia::render('DoctorCreate');
+})->middleware(['auth', 'verified'])->name('doctormaken');
+
+Route::get('/kamer maken',function(){
+    return Inertia::render('RoomCreate');
+})->middleware(['auth', 'verified'])->name('kamermaken');
 
 //Route::post('/afspraken',[AppointmentController::class,'CreateAppointment'])->name('afspraken.CreateAppointment');
 //Route::get('/getappointments', [AppointmentController::class,'GetAppointments'])->name('afspraken.GetAppointments');

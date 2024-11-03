@@ -47,3 +47,11 @@ export interface WaitingListType {
     name: string;
     email: string;
 }
+
+export interface ArchivePatientType {
+    id:number;
+    patient_id: number;
+    doctor_id: number;
+    address_id: number;
+    room_id: number;
+}

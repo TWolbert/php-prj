@@ -66,7 +66,7 @@ export default function RoomCreate({ auth }: PageProps) {
                         </label>
                         <input type="checkbox" id="taken" checked={taken} onChange={(e) => setTaken(e.target.checked)} />
                     </div>
-                    <button type="submit">
+                    <button type="submit" className="bg-blue-300 px-3 py-2 rounded-md shadow-md font-bold text-white">
                         creër kamer
                     </button>
                 </form>
