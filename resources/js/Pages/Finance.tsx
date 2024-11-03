@@ -65,42 +65,42 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
                         <label className="block" htmlFor='patientId'>
                             patient id
                         </label>
-                        <input id='patientId' type='text' onChange={searchPatientId} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='patientId' type='text' onChange={searchPatientId} />
                     </div>
 
                     <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='roomId'>
                             kamer id
                         </label>
-                        <input className={'bg-gray-200'} id='roomId' type='text' value={roomId} disabled />
+                        <input className={'bg-gray-200 rounded-md shadow-md'} id='roomId' type='text' value={roomId} disabled />
                     </div>
 
                     <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='careCost'>
                             verzorgingskosten
                         </label>
-                        <input  id='careCost' type='number' min={1}  onChange={(e) => setCareCost(Number(e.target.value))} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='careCost' type='number' min={1}  onChange={(e) => setCareCost(Number(e.target.value))} />
                     </div>
 
                     <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='rentPerDay'>
                             huur per dag
                         </label>
-                        <input className={'bg-gray-200'} id='rentPerDay' type='text' value={roomRent}  disabled />
+                        <input className={'bg-gray-200 rounded-md shadow-md'} id='rentPerDay' type='text' value={roomRent}  disabled />
                     </div>
 
                     <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='daysOnRoom'>
                             hoeveel dagen op kamer
                         </label>
-                        <input  id='daysOnRoom' type='number' min={1} onChange={(e) => setRoomDays(Number(e.target.value))} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='daysOnRoom' type='number' min={1} onChange={(e) => setRoomDays(Number(e.target.value))} />
                     </div>
 
                     <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='totalCost'>
                             totale kosten
                         </label>
-                        <input className={'bg-gray-200'}  id='totalCost' type='text' value={totalCost} disabled />
+                        <input className={'bg-gray-200 rounded-md shadow-md'}  id='totalCost' type='text' value={totalCost} disabled />
                     </div>
 
                     <button className={'bg-blue-400 p-4'}>
