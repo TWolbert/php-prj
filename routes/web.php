@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BillingsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\IncidentsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\WaitingListController;
 use App\Models\Appointment;
+use App\models\Billings;
 use App\Models\doctors;
 use App\Models\Incident;
 use App\Models\incidents;
@@ -90,6 +92,7 @@ Route::resource('doctors', DoctorsController::class)->middleware(['auth', 'verif
 Route::resource('rooms', RoomsController::class)->middleware(['auth', 'verified']);
 Route::resource('incident', IncidentsController::class)->middleware(['auth', 'verified']);
 Route::resource('waitinglist', WaitingListController::class)->middleware(['auth', 'verified']);
+Route::resource('Billings',BillingsController::class)->middleware(['auth', 'verified']);
 
 //Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 

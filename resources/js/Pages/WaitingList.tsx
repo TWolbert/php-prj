@@ -34,7 +34,7 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Inschrijven wachtlijst</h2>}
         >
-            <div>
+            <div className="flex justify-center items-center h-screen">
                 {auth.user.role === 0 && (
 
                     <form onSubmit={SignInWaitingList}>

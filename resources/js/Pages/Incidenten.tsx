@@ -41,25 +41,25 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
 
                 <form onSubmit={createIncident} className=" flex flex-col gap-2 mx-[30rem] min-w-fit">
 
-                    <div className="mb-4">
+                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='date'>
                             datum
                         </label>
-                        <input id='date' type='date' value={date} onChange={(e) => setDate(e.target.value)} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='date' type='date' value={date} onChange={(e) => setDate(e.target.value)} />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='injury'>
                             verwonding
                         </label>
-                        <input id='injury' type='text' value={sortInjury} onChange={(e) => setSortInjury(e.target.value)} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='injury' type='text' value={sortInjury} onChange={(e) => setSortInjury(e.target.value)} />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
                         <label className="block" htmlFor='patientId'>
                             patient id
                         </label>
-                        <input id='patientId' type='text' value={patientId} onChange={(e) => setPatientId(e.target.value)} />
+                        <input className="border-gray-200 rounded-md shadow-md" id='patientId' type='text' value={patientId} onChange={(e) => setPatientId(e.target.value)} />
                     </div>
                     <button type="submit">
                         incident melden

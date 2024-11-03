@@ -34,6 +34,11 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('waitinglist')} active={route().current('waitinglist')}>
                                     wachtlijst 
                                 </NavLink>
+                                    {user.role === 1 && (
+                                <NavLink href={route('finance')} active={route().current('finance')}>
+                                    financien 
+                                </NavLink>
+                                    )}
                             </div>
                         </div>
 

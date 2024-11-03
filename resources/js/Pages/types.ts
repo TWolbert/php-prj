@@ -32,6 +32,7 @@ export interface RoomType {
     number: string;
     room_type_id: number;
     room_taken: boolean;
+    rent: number;
 }
 
 export interface IncidentenType {
