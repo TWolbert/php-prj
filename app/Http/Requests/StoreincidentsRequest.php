@@ -11,7 +11,7 @@ class StoreincidentsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreincidentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'date' => ['date'],
+                'sort_injury' => ['required', 'string', 'max:255'],
+                'patient_id' => ['required', 'numeric'],
         ];
     }
 }

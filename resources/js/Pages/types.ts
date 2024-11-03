@@ -11,7 +11,7 @@ export interface PatientType {
     room_id: number,
 }
 
-export interface DoctorType {
+export interface DoctorType { 
     id: number;
     firstname: string;
     lastname: string;
@@ -32,23 +32,18 @@ export interface RoomType {
     number: string;
     room_type_id: number;
     room_taken: boolean;
+    rent: number;
 }
 
 export interface IncidentenType {
     id: number;
-    date: string;
+    date: Date;
     sort_injury: string;
     patient_id: number;
 }
 
-export interface AppointmentType {
+export interface WaitingListType {
     id: number;
-    date: Date;
-    time: string;
-    patient_id: number;
-    place: string;
-}
-
-export interface ArchiveType {
-    //
+    name: string;
+    email: string;
 }

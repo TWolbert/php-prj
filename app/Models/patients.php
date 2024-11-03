@@ -21,6 +21,6 @@ class patients extends Model
         'doctor_id',
         'address_id',
         'extra_id',
-        'rooom_id',
+        'room_id',
     ];
 }

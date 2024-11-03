@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class incidents extends Model
+class Billings extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'date',
-        'sort_injury',
-        'patient_id'
-    ];
+        'patient_id',
+        'room_id',
+        'care_costs', 
+        'rent_per_day' ,
+        'days_in_room',
+        'total_cost'
+      ];
 }

@@ -25,6 +25,7 @@ class StoreroomsRequest extends FormRequest
             'number' => ['required', 'string', 'max:255'],
             'room_type_id' => ['required'],
             'room_taken' => ['required', 'boolean'],
+            'rent' => ['required','numeric']
         ];
     }
 }

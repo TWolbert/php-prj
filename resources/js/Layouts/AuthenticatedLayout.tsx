@@ -25,8 +25,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                <NavLink href={route('voorvallen')} active={route().current('voorvallen')}>
-                                    Voorvallen
+                                <NavLink href={route('incidenten')} active={route().current('incidenten')}>
+                                    incidenten
                                 </NavLink>
                                 <NavLink href={route('patients')} active={route().current('patients')}>
                                     Patiënten
@@ -37,6 +37,14 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('archive')} active={route().current('archive')}>
                                     Archief
                                 </NavLink>
+                                <NavLink href={route('waitinglist')} active={route().current('waitinglist')}>
+                                    wachtlijst 
+                                </NavLink>
+                                    {user.role === 1 && (
+                                <NavLink href={route('finance')} active={route().current('finance')}>
+                                    financien 
+                                </NavLink>
+                                    )}
                             </div>
                         </div>
 

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\incidents;
-use App\Http\Requests\StoreincidentsRequest;
-use App\Http\Requests\UpdateincidentsRequest;
-use Inertia\Inertia;
+use App\Http\Requests\StoreBillingsRequest;
+use Illuminate\Http\Request;
+use App\Models\Billings;
 
-class IncidentsController extends Controller
+class BillingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,21 +21,28 @@ class IncidentsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Incidenten');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreincidentsRequest $request)
+    public function store(StoreBillingsRequest $request)
     {
-      incidents::create($request->validated());
+        $billing = Billings::where('patient_id',$request->patient_id)
+        ->first();
+
+        if ($billing) {
+            return response()->json(['error' => 'Er is al een facturatie gemaakt met dit patient_id'], 400);
+        }
+
+        Billings::create($request->validated());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(incidents $incidents)
+    public function show(Billings $billings)
     {
         //
     }
@@ -44,7 +50,7 @@ class IncidentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(incidents $incidents)
+    public function edit(Billings $billings)
     {
         //
     }
@@ -52,7 +58,7 @@ class IncidentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateincidentsRequest $request, incidents $incidents)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +66,7 @@ class IncidentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(incidents $incidents)
+    public function destroy(Billings $billings)
     {
         //
     }

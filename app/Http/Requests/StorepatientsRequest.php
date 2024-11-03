@@ -11,7 +11,7 @@ class StorepatientsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->role == 1;
     }
 
     /**
@@ -22,7 +22,9 @@ class StorepatientsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'patient' => ['required', 'array'],
+            'address' => ['required', 'array'],
+            'extra' => ['required', 'array'],
         ];
     }
 }
