@@ -103,7 +103,7 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
                         <input className={'bg-gray-200 rounded-md shadow-md'}  id='totalCost' type='text' value={totalCost} disabled />
                     </div>
 
-                    <button className={'bg-blue-400 p-4'}>
+                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                         opslaan
                     </button>
                 </form>

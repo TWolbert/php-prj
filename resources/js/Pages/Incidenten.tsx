@@ -61,7 +61,7 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
                         </label>
                         <input className="border-gray-200 rounded-md shadow-md" id='patientId' type='text' value={patientId} onChange={(e) => setPatientId(e.target.value)} />
                     </div>
-                    <button type="submit">
+                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="submit">
                         incident melden
                     </button>
                 </form>
