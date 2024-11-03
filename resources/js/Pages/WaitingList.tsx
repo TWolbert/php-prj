@@ -13,9 +13,6 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
         setData(list);
     }, [list]);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
     const SignInWaitingList = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axios.post('/waitinglist', {
@@ -39,12 +36,10 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
                 {auth.user.role === 0 && (
 
                     <form onSubmit={SignInWaitingList} className="mb-4">
-                        <button type="submit" className="bg-blue-400 p-4">
+                        <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                             inschrijven
                         </button>
                     </form>
-
-
                 )}
          
 

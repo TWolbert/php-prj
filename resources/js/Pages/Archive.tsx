@@ -12,9 +12,6 @@ export default function Archive({ auth,archivedPatients }: PageProps<{archivedPa
         setData(archivedPatients);
     }, [archivedPatients]);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
 return (
 <AuthenticatedLayout
