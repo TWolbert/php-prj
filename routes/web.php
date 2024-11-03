@@ -38,7 +38,9 @@ Route::get('/dashboard', function () {
 
 Route::get('/patientinfo/{id}',function($id){
     return Inertia::render('Patientinfo',[
-        'patients' => Patient::findOrFail($id)
+        'patient' => Patient::findOrFail($id),
+        'doctors' => doctors::all(),
+        'rooms' => rooms::all(),	
     ]);
 })->name('patientinfo');
 
@@ -51,7 +53,8 @@ Route::get('/patients',function(){
 Route::get('/patients/create',function(){
     return Inertia::render('PatientCreate', [
         'doctors' => doctors::all(),
-        'rooms' => rooms::all()
+        'rooms' => rooms::all(),
+        'waitinglist' => waitinglist::all()
     ]);
 })->middleware(['auth', 'verified'])->name('patientcreate');
 
@@ -92,8 +95,8 @@ Route::resource('doctors', DoctorsController::class)->middleware(['auth', 'verif
 Route::resource('rooms', RoomsController::class)->middleware(['auth', 'verified']);
 Route::resource('incident', IncidentsController::class)->middleware(['auth', 'verified']);
 Route::resource('waitinglist', WaitingListController::class)->middleware(['auth', 'verified']);
+Route::resource('patient', controller: PatientsController::class)->middleware(['auth', 'verified']);
 Route::resource('Billings',BillingsController::class)->middleware(['auth', 'verified']);
-
 //Route::patch('/updatepatients/{id}',[PatientController::class,'updatePatients'])->name('patientinfo.updatePatients');
 
 Route::middleware('auth')->group(function () {

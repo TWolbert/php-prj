@@ -11,7 +11,7 @@ class UpdatepatientsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->role == 1;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdatepatientsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'string'],
+            'doctor_id' => ['required', 'integer'],
+            'room_id' => ['required', 'integer'],
         ];
     }
 }

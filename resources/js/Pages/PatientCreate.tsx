@@ -1,10 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { useEffect, useState } from 'react';
-import { DoctorType, PatientType, Address, RoomType } from './types';
+import { DoctorType, PatientType, Address, RoomType, WaitingListType } from './types';
 import axios from 'axios';
 
-export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doctors: DoctorType[], rooms: RoomType[] }>) {
+export default function PatientCreate({ auth, doctors, rooms, waitinglist }: PageProps<{ doctors: DoctorType[], rooms: RoomType[], waitinglist: WaitingListType[] }>) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
@@ -103,31 +103,35 @@ export default function PatientCreate({ auth, doctors, rooms }: PageProps<{ doct
             });
     }
 
+    function handleWaitingListPatient(e: React.ChangeEvent<HTMLSelectElement>) {    
+        const patientFirstName = waitinglist.find(waiting => waiting.id === parseInt(e.target.value))?.name.split(' ')[0];
+        const patientLastName = waitinglist.find(waiting => waiting.id === parseInt(e.target.value))?.name.split(' ')[1];
+
+        if (!patientFirstName || !patientLastName) {
+            console.error('Patient not found');
+            return;
+        }
+
+        setFirstName(patientFirstName!);
+        setLastName(patientLastName!);
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Patient creëren</h2>}
         >
             <div>
-                <form onSubmit={handleSubmit} className='flex flex-col gap-2 mx-5 '>
-                    <div className="flex flex-col gap-1 px-3 py-2 mt-5 bg-white rounded-md shadow-md ">
-                        <label htmlFor="firstName">
-                            First Name
-                        </label>
-                        <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
-                        <p>
-                            {firstName.length} / 255
-                        </p>
-                    </div>
+                <form onSubmit={handleSubmit} className='flex flex-col gap-2 mx-5 mt-5 '>
                     <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="lastName">
-                            Last Name
+                            Patient from waitinglist
                         </label>
-                        <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="px-3 py-2 border-gray-200 rounded-md shadow-md" />
-                        <p>
-                            {lastName.length} / 255
-                        </p>
+                        <select id="waitinglist" onChange={handleWaitingListPatient} className="px-3 py-2 border-gray-200 rounded-md shadow-md">
+                            {waitinglist.map(waiting => <option key={waiting.id} value={waiting.id}>{waiting.name}</option>)}
+                        </select>
                     </div>
+
                     {/* Checkbox for is Extern */}
                     <div className="flex justify-between gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
                         <label htmlFor="isExtern">

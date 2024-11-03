@@ -66,9 +66,12 @@ class PatientsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatepatientsRequest $request, patients $patients)
+    public function update(UpdatepatientsRequest $request, patients $patient)
     {
-        //
+        $patient->update($request->validated());
+
+        // Return confirmation message
+        return ['message' => 'Patient updated'];
     }
 
     /**
@@ -76,6 +79,7 @@ class PatientsController extends Controller
      */
     public function destroy(patients $patients)
     {
-        //
+        // add patient id to archive table
+        
     }
 }
