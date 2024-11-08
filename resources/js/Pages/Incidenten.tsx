@@ -39,7 +39,7 @@ export default function Incidenten({ auth, incident, patients  }: PageProps<{ in
         >
             <div>
 
-                <form onSubmit={createIncident} className=" flex flex-col gap-2 min-w-fit bg-white shadow-md rounded-md max-w-[50%] mx-auto p-3 mt-5">
+                <form onSubmit={createIncident} className=" flex flex-col gap-2 min-w-fit max-w-[50%] mx-auto p-3 mt-5">
 
                     <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='date'>

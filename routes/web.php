@@ -39,17 +39,28 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/patientinfo/{id}',function($id){
+Route::get('/patients/{id}',function($id){
+    $isArchived = archive::where('patient_id',$id)->exists();
     return Inertia::render('Patientinfo',[
         'patient' => Patient::findOrFail($id),
         'doctors' => doctors::all(),
         'rooms' => rooms::all(),	
+        'incidents' => incidents::where('patient_id',$id)->get(),
+        'isArchived' => $isArchived
     ]);
 })->name('patientinfo');
 
+// /parients/archive route POST that takes the following arguments ID, isDead, isArchived
+Route::post('/patients/archive', [PatientsController::class, 'archive'])->name('patients.archive'); 
+
 Route::get('/patients',function(){
+    // Get all patients that don't appear in the archive table
+    $archivedPatients = archive::all()->pluck('patient_id');
+    $patients = Patient::whereNotIn('id', $archivedPatients)->get();
+
+
     return Inertia::render('Patients',[
-        'patients' => Patient::all()
+        'patients' => $patients,
     ]);
 })->middleware(['auth', 'verified'])->name('patients');
 
@@ -98,11 +109,11 @@ Route::get('/archief',function(){
     ]);
 })->middleware(['auth', 'verified'])->name('archive');
 
-Route::get('/doctor maken',function(){
+Route::get('/doctor/create',function(){
     return Inertia::render('DoctorCreate');
 })->middleware(['auth', 'verified'])->name('doctormaken');
 
-Route::get('/kamer maken',function(){
+Route::get('/room/create',function(){
     return Inertia::render('RoomCreate');
 })->middleware(['auth', 'verified'])->name('kamermaken');
 
