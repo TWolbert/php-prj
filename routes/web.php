@@ -62,9 +62,10 @@ Route::get('/voorvallen',function(){
     return Inertia::render('Voorvallen');
 })->name('voorvallen');
 
-Route::get('/incidenten',function(){
+Route::get('/incidents',function(){
     return Inertia::render('Incidenten',[
-        'incident' =>Incidents::all()
+        'incident' =>Incidents::all(),
+        'patients' => Patient::all()
     ]);
 })->middleware(['auth', 'verified'])->name('incidenten');
 
