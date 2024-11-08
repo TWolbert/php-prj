@@ -16,8 +16,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <Link href="/dashboard">
+                                    <img
+                                        src="/images/logo-no-background.png"
+                                        alt="Your Logo"
+                                        className="block h-9 w-auto"
+                                    />
                                 </Link>
                             </div>
 
@@ -28,12 +32,40 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('incidenten')} active={route().current('incidenten')}>
                                     incidenten
                                 </NavLink>
-                                <NavLink href={route('patients')} active={route().current('patients')}>
-                                    Patiënten 
-                                </NavLink>
                                 <NavLink href={route('waitinglist')} active={route().current('waitinglist')}>
-                                    wachtlijst 
+                                    wachtlijst
                                 </NavLink>
+                                {user.role === 1 && (
+                                    <NavLink href={route('patients')} active={route().current('patients')}>
+                                        Patiënten
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('finance')} active={route().current('finance')}>
+                                        financien
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('archive')} active={route().current('archive')}>
+                                        Archief
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('appointment')} active={route().current('appointment')}>
+                                        Afspraak maken
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('doctormaken')} active={route().current('doctormaken')}>
+                                        doctor creëren
+                                    </NavLink>
+                                )}
+                                {user.role === 1 && (
+                                    <NavLink href={route('kamermaken')} active={route().current('kamermaken')}>
+                                        kamer creëren
+                                    </NavLink>
+                                )}
+
                             </div>
                         </div>
 

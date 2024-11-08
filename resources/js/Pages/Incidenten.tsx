@@ -41,21 +41,21 @@ export default function Incidenten({ auth, incident, patients  }: PageProps<{ in
 
                 <form onSubmit={createIncident} className=" flex flex-col gap-2 min-w-fit bg-white shadow-md rounded-md max-w-[50%] mx-auto p-3 mt-5">
 
-                    <div className="mb-4">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='date'>
                             Datum
                         </label>
                         <input id='date' type='date' className="w-full rounded-md shadow-md" value={date} onChange={(e) => setDate(e.target.value)} />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='injury'>
                             Verwonding
                         </label>
                         <input id='injury' type='text' className="w-full rounded-md shadow-md"  value={sortInjury} onChange={(e) => setSortInjury(e.target.value)} />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='patientId'>
                             Patient
                         </label>

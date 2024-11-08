@@ -32,6 +32,7 @@ export interface RoomType {
     number: string;
     room_type_id: number;
     room_taken: boolean;
+    rent: number;
 }
 
 export interface IncidentenType {
@@ -45,4 +46,12 @@ export interface WaitingListType {
     id: number;
     name: string;
     email: string;
+}
+
+export interface ArchivePatientType {
+    id:number;
+    patient_id: number;
+    doctor_id: number;
+    address_id: number;
+    room_id: number;
 }

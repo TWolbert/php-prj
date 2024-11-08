@@ -13,9 +13,6 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
         setData(list);
     }, [list]);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
     const SignInWaitingList = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axios.post('/waitinglist', {
@@ -23,9 +20,10 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
             email: email,
         }).then(response => {
             console.log(response)
-            alert("U bent ingeschreven")
+            console.error("U bent ingeschreven")
         }).catch(error => {
             console.log(error)
+            alert("U bent ingeschreven")
         })
     }
 
@@ -34,22 +32,19 @@ export default function WaitingList({ auth, list }: PageProps<{ list: WaitingLis
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Inschrijven wachtlijst</h2>}
         >
-            <div>
+            <div className="flex flex-col items-center justify-start min-h-screen">
                 {auth.user.role === 0 && (
 
-                    <form onSubmit={SignInWaitingList}>
-                        <button type="submit" className="bg-blue-400 p-4">
+                    <form onSubmit={SignInWaitingList} className="mb-4">
+                        <button type="submit" className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                             inschrijven
                         </button>
                     </form>
-
-
                 )}
-            </div>
+         
 
-            <div>
                 {auth.user.role === 1 && (
-
+                    
                     <div className="flex flex-col items-center justify-center pt-3 px-[30rem] gap-2">
                         {data.length > 0 ? (
                            <ul className="w-full space-y-2">

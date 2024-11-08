@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\appointments;
-use App\Http\Requests\StoreappointmentsRequest;
-use App\Http\Requests\UpdateappointmentsRequest;
-use Inertia\Inertia;
+use App\Http\Requests\StoreBillingsRequest;
+use Illuminate\Http\Request;
+use App\Models\Billings;
 
-class AppointmentsController extends Controller
+class BillingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,21 +21,28 @@ class AppointmentsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Appointment');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreappointmentsRequest $request)
+    public function store(StoreBillingsRequest $request)
     {
-        appointments::create($request->validated());
+        $billing = Billings::where('patient_id',$request->patient_id)
+        ->first();
+
+        if ($billing) {
+            return response()->json(['error' => 'Er is al een facturatie gemaakt met dit patient_id'], 400);
+        }
+
+        Billings::create($request->validated());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(appointments $appointments)
+    public function show(Billings $billings)
     {
         //
     }
@@ -44,7 +50,7 @@ class AppointmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(appointments $appointments)
+    public function edit(Billings $billings)
     {
         //
     }
@@ -52,7 +58,7 @@ class AppointmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateappointmentsRequest $request, appointments $appointments)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +66,7 @@ class AppointmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(appointments $appointments)
+    public function destroy(Billings $billings)
     {
         //
     }
