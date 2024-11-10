@@ -41,7 +41,7 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
 
     const sendVacancy = (e: React.FormEvent<HTMLFormElement>) =>{
         if(!patientId || !careCost || !roomDays) {
-            alert("vul alles in")
+            toast.error("vul alles in",toastOptions)
             return false;
         }
         e.preventDefault();
