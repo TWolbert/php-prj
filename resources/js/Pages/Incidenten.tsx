@@ -3,7 +3,9 @@ import axios from "axios";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from "@/types";
 import { IncidentenType } from "./types";
-
+import { toast,ToastContainer } from "react-toastify";
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Incidenten({ auth, incident  }: PageProps<{ incident: IncidentenType[] }>) {
 
@@ -12,6 +14,12 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
     const [sortInjury, setSortInjury] = useState('');
     const [patientId, setPatientId] = useState('');
 
+    const toastOptions:ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick:true,
+        theme:"light",
+    }
 
 
     const createIncident = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +30,7 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
             patient_id: patientId
         }).then(response => {
             console.log(response.data);
-            alert("incident gemaakt")
+           toast.success("incident opgeslagen",toastOptions)
         }).catch(error => {
             console.log(error)
         })
@@ -37,6 +45,7 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Incident melden</h2>}
         >
+             <ToastContainer/>
             <div>
 
                 <form onSubmit={createIncident} className=" flex flex-col gap-2 mx-[30rem] min-w-fit">
@@ -65,7 +74,7 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
                         incident melden
                     </button>
                 </form>
-               
+              
             </div>
 
         </AuthenticatedLayout>

@@ -3,6 +3,8 @@ import { PageProps } from "@/types";
 import React,{ useState } from "react";
 import axios from "axios";
 import {AppointmentType} from "@/Pages/types";
+
+
 export default function Appointment({ auth }: PageProps<{ appointments: AppointmentType[]}>) {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
