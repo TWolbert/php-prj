@@ -7,7 +7,7 @@ import { toast,ToastContainer } from "react-toastify";
 import { ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Incidenten({ auth, incident  }: PageProps<{ incident: IncidentenType[] }>) {
+export default function Incidenten({ auth, incident, patients  }: PageProps<{ incident: IncidentenType[], patients: PatientType[] }>) {
 
     const [id, setId] = useState('');
     const [date, setDate] = useState('');
@@ -43,35 +43,41 @@ export default function Incidenten({ auth, incident  }: PageProps<{ incident: In
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Incident melden</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Incident melden</h2>}
         >
              <ToastContainer/>
             <div>
 
-                <form onSubmit={createIncident} className=" flex flex-col gap-2 mx-[30rem] min-w-fit">
+                <form onSubmit={createIncident} className=" flex flex-col gap-2 min-w-fit max-w-[50%] mx-auto p-3 mt-5">
 
-                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='date'>
-                            datum
+                            Datum
                         </label>
-                        <input className="border-gray-200 rounded-md shadow-md" id='date' type='date' value={date} onChange={(e) => setDate(e.target.value)} />
+                        <input id='date' type='date' className="w-full rounded-md shadow-md" value={date} onChange={(e) => setDate(e.target.value)} />
                     </div>
 
-                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='injury'>
-                            verwonding
+                            Verwonding
                         </label>
-                        <input className="border-gray-200 rounded-md shadow-md" id='injury' type='text' value={sortInjury} onChange={(e) => setSortInjury(e.target.value)} />
+                        <input id='injury' type='text' className="w-full rounded-md shadow-md"  value={sortInjury} onChange={(e) => setSortInjury(e.target.value)} />
                     </div>
 
-                    <div className="flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">
+                    <div className="flex flex-col px-3 py-2 mt-2 bg-white rounded-md shadow-md">
                         <label className="block" htmlFor='patientId'>
-                            patient id
+                            Patient
                         </label>
-                        <input className="border-gray-200 rounded-md shadow-md" id='patientId' type='text' value={patientId} onChange={(e) => setPatientId(e.target.value)} />
+                        <select id='patientId' className="w-full rounded-md shadow-md"  value={patientId} onChange={(e) => setPatientId(e.target.value)}>
+                            {patients.map((patient) => (
+                                <option key={patient.id} value={patient.id}>
+                                    {patient.firstname} {patient.lastname}
+                                </option>
+                            ))}
+                        </select>
                     </div>
-                    <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="submit">
-                        incident melden
+                    <button type="submit" className="p-2 font-bold text-white bg-blue-400 rounded-md shadow-md">
+                        Incident Melden
                     </button>
                 </form>
               

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientArchiveRequest;
 use App\Models\patients;
 use App\Http\Requests\StorepatientsRequest;
 use App\Http\Requests\UpdatepatientsRequest;
 use App\Models\address;
+use App\Models\archive;
 use App\Models\extra;
 
 class PatientsController extends Controller
@@ -81,5 +83,25 @@ class PatientsController extends Controller
     {
         // add patient id to archive table
         
+    }
+
+    public function archive(PatientArchiveRequest $request)
+    {
+        // add patient id to archive table
+        $patient = patients::find($request->validated()['id']);
+
+        $patient->is_dead = $request->validated()['isDead'];
+
+        $patient->save();
+
+        $archive = new archive();
+        $archive->patient_id = $request->validated()['id'];
+        $archive->doctor_id = $patient->doctor_id;
+        $archive->address_id = $patient->address_id;
+        $archive->room_id = $patient->room_id;
+        $archive->save();
+
+        // Return confirmation message
+        return ['message' => 'Patient archived'];
     }
 }
