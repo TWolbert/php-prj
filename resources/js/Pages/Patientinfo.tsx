@@ -98,7 +98,7 @@ export default function Patientinfo({
                 user={auth.user}
                 header={
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 ">
-                        Patient creëren
+                        Patient info
                     </h2>
                 }
             >
