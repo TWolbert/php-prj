@@ -3,6 +3,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DoctorType, IncidentenType, PatientType, RoomType } from "./types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { toast,ToastContainer } from "react-toastify";
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Patientinfo({
     auth,
@@ -28,6 +31,13 @@ export default function Patientinfo({
 
     const [editable, setEditable] = useState(false);
 
+    const toastOptions:ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick:true,
+        theme:"light",
+    }
+
     const changePatientinfo = async () => {
         try {
             const updateData = {
@@ -42,10 +52,10 @@ export default function Patientinfo({
                 updateData
             );
             console.log(changeResponse.data);
-            alert("update gelukt");
+            toast.success("update gelukt",toastOptions);
         } catch (error) {
             console.log("error", error);
-            alert("er is een fout opgetreden");
+            toast.error("er is een fout opgetreden",toastOptions);
         }
     };
 
@@ -71,10 +81,10 @@ export default function Patientinfo({
             isDead: isDead
         }).then((response) => {
             console.log(response.data);
-            alert("Patient gearchiveerd");
+            toast.success("Patient gearchiveerd",toastOptions);
         }).catch((error) => {
             console.log("error", error);
-            alert("er is een fout opgetreden");
+            toast.error("er is een fout opgetreden");
         });
     }
         
@@ -92,6 +102,7 @@ export default function Patientinfo({
                     </h2>
                 }
             >
+                <ToastContainer/>
                 {/* info van patient terugzien in een form format */}
                 <form className="p-4 mx-auto mt-5 mb-4 bg-white rounded-md shadow-md w-fit ">
                     <div className="mb-4">

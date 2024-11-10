@@ -3,6 +3,9 @@ import { PageProps } from '@/types';
 import { PatientType, RoomType } from './types';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import {toast,ToastContainer} from "react-toastify"
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Finance({ auth,patients,rooms }: PageProps<{patients: PatientType[], rooms:RoomType[]}>) {
 
@@ -13,6 +16,12 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
     const [roomDays,setRoomDays] = useState(0);
     const [totalCost,setTotalCost] = useState(0);
 
+    const toastOptions:ToastOptions = ({
+        position:"top-right",
+        autoClose:3000,
+        closeOnClick:true,
+        theme:"light"
+    });
 
     useEffect(() => {
         setTotalCost(roomDays * roomRent + careCost);
@@ -46,10 +55,15 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
             total_cost:totalCost
         }).then(response =>{
             console.log(response)
-            alert("facturatie opgestuurd")
+           toast.success("facture opgestuurd",toastOptions)
+           setTimeout(() => {
             document.location.href = '/dashboard';
+           }, 3000);
         }).catch(error =>{
             console.log(error)
+            if ('error' in error.response.data) {
+                toast.error(error.response.data.error,toastOptions);
+            }
         })
     }
     
@@ -58,6 +72,7 @@ export default function Finance({ auth,patients,rooms }: PageProps<{patients: Pa
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">facturatie maken </h2>}
         >
+            <ToastContainer/>
             <div>
                 <form onSubmit={sendVacancy} className=" flex flex-col gap-2 mx-[30rem] min-w-fit">
 

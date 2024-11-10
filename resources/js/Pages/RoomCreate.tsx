@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from "@/types";
+import { toast,ToastContainer } from "react-toastify";
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RoomCreate({ auth }: PageProps) {
@@ -9,6 +12,14 @@ export default function RoomCreate({ auth }: PageProps) {
     const [isMultiplePeople, setIsMultiplePeople] = useState(false);
     const [taken, setTaken] = useState(false);
     const [roomRent,setRoomRent] = useState('');
+
+    const toastOptions:ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick:true,
+        theme:"light",
+    }
+
 
     useEffect(() => {
         if (parseInt(roomNumber) < 0) {
@@ -25,13 +36,16 @@ export default function RoomCreate({ auth }: PageProps) {
             rent: roomRent,
         }).then(response => {
             console.log(response.data);
-            alert("Room created");
-            document.location.href = '/dashboard';
+            toast.success("Room created",toastOptions);
+            setTimeout(() => {
+                document.location.href = '/dashboard';
+            }, 3000);  
         }).catch(error => {
             console.log(error);
             if ('error' in error.response.data) {
-                alert(error.response.data.error);
+                toast.error(error.response.data.error,toastOptions);
             }
+
         });
     };
 
@@ -40,6 +54,7 @@ export default function RoomCreate({ auth }: PageProps) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Kamer creëren</h2>}
         >
+            <ToastContainer/>
             <div>
                 <form onSubmit={createRoom} className=" flex flex-col gap-2 mx-[30rem] min-w-fit">
                     <div className=" flex flex-col bg-white px-3 py-2 mt-2 rounded-md shadow-md">

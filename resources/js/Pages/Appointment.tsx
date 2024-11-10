@@ -3,6 +3,9 @@ import { PageProps } from "@/types";
 import React,{ useState } from "react";
 import axios from "axios";
 import {AppointmentType} from "@/Pages/types";
+import { toast,ToastContainer } from "react-toastify";
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Appointment({ auth }: PageProps<{ appointments: AppointmentType[]}>) {
@@ -10,6 +13,14 @@ export default function Appointment({ auth }: PageProps<{ appointments: Appointm
     const [time, setTime] = useState('');
     const [patientId, setPatientId] = useState('');
     const [place, setPlace] = useState('');
+
+    const toastOptions:ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick:true,
+        theme:"light",
+    }
+
     const createAppointment = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -20,20 +31,23 @@ export default function Appointment({ auth }: PageProps<{ appointments: Appointm
             place: place
         }).then(response => {
             console.log(response.data);
-            alert("Afspraak gemaakt");
-            document.location.href = '/dashboard';
+            toast.success("afsrpaak gemaakt",toastOptions)
+            setTimeout(() => {
+                document.location.href = '/dashboard';
+            }, 3000); 
         }).catch(error => {
             console.log(error);
             if ('error' in error.response.data) {
-                alert(error.response.data.error);
+                toast.error(error.response.data.error,toastOptions);
             }
+            toast.error("vul alles in",toastOptions)
         });
     }
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Afspraak maken</h2>}>
-
+        <ToastContainer/>
         <div>
             <form className="max-w-7xl mx-auto sm:px-6 lg:px-8" onSubmit={createAppointment}>
                 <div>

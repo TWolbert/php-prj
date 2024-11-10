@@ -2,12 +2,22 @@ import { useState } from "react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from "@/types";
 import axios from "axios";
+import { toast,ToastContainer } from "react-toastify";
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function DoctorCreate({ auth }: PageProps) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [placeOfWork, setPlaceOfWork] = useState('');
+
+    const toastOptions:ToastOptions = {
+        position: "top-right",
+        autoClose: 3000,
+        closeOnClick:true,
+        theme:"light",
+    }
 
     function submitDoctor(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -18,13 +28,16 @@ export default function DoctorCreate({ auth }: PageProps) {
             place: placeOfWork
         }).then(response => {
             console.log(response.data);
-            alert("Doctor created");
-            document.location.href = '/dashboard';
+            toast.success("doctor gemaakt",toastOptions)
+            setTimeout(() => {
+                document.location.href = '/dashboard';
+            }, 3000);
         }).catch(error => {
             console.log(error);
             if ('error' in error.response.data) {
                 alert(error.response.data.error);
             }
+            toast.error("vul alles in",toastOptions)
         });
     }
 
@@ -33,6 +46,7 @@ export default function DoctorCreate({ auth }: PageProps) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Doctor creëren</h2>}
         >
+            <ToastContainer/>
             <div>
                 <form onSubmit={submitDoctor} className="flex flex-col gap-2 items-center justify-center pt-3">
                     <div className=" flex flex-col gap-1 bg-white rounded-md shadow-md px-3 py-2">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from "@/types";
-import { IncidentenType } from "./types";
+import { IncidentenType,PatientType } from "./types";
 import { toast,ToastContainer } from "react-toastify";
 import { ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,6 +33,12 @@ export default function Incidenten({ auth, incident, patients  }: PageProps<{ in
            toast.success("incident opgeslagen",toastOptions)
         }).catch(error => {
             console.log(error)
+            if ('error' in error.response.data) {
+                toast.error(error.response.data.error,toastOptions);
+            }
+            else{
+                toast.error("vul alles in",toastOptions)
+            }
         })
         setDate('')
         setSortInjury('')

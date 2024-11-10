@@ -3,6 +3,9 @@ import { PageProps } from '@/types';
 import { useEffect, useState } from 'react';
 import { DoctorType, PatientType, Address, RoomType, WaitingListType } from './types';
 import axios from 'axios';
+import { toast,ToastContainer } from 'react-toastify';
+import { ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function PatientCreate({ auth, doctors, rooms, waitinglist }: PageProps<{ doctors: DoctorType[], rooms: RoomType[], waitinglist: WaitingListType[] }>) {
     const [firstName, setFirstName] = useState('');
@@ -116,11 +119,19 @@ export default function PatientCreate({ auth, doctors, rooms, waitinglist }: Pag
         setLastName(patientLastName!);
     }
 
+    const toastOptions: ToastOptions = ({
+        position:"top-right",
+        autoClose:3000,
+        closeOnClick:true,
+        theme:"light"
+    })
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Patient creëren</h2>}
         >
+            <ToastContainer/>
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col gap-2 mx-5 mt-5 '>
                     <div className="flex flex-col gap-1 px-3 py-2 bg-white rounded-md shadow-md ">
