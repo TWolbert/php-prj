@@ -3,8 +3,7 @@ import { PageProps } from '@/types';
 import { useEffect, useState } from 'react';
 import { DoctorType, PatientType, Address, RoomType, WaitingListType } from './types';
 import axios from 'axios';
-import { toast,ToastContainer } from 'react-toastify';
-import { ToastOptions } from 'react-toastify';
+import { toast,ToastContainer, ToastOptions } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function PatientCreate({ auth, doctors, rooms, waitinglist }: PageProps<{ doctors: DoctorType[], rooms: RoomType[], waitinglist: WaitingListType[] }>) {

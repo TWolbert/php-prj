@@ -3,8 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DoctorType, IncidentenType, PatientType, RoomType } from "./types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { toast,ToastContainer } from "react-toastify";
-import { ToastOptions } from 'react-toastify';
+import { toast,ToastContainer, ToastOptions } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Patientinfo({
